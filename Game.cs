@@ -94,7 +94,6 @@ namespace MineSweeper_2
             }
         }
 
-        // Add the following methods to your Game class:
 
         public void RevealCell(int row, int col)
         {
@@ -127,12 +126,7 @@ namespace MineSweeper_2
         //Reals adjacentCells when current cell value is 0 using Depth-first-search
         public void RevealAdjacentCells(int row, int col)
         {
-            if (row < 0 || col < 0 || row >= Rows || col >= Columns)
-            {
-                return;
-            }
-
-            if (Cells[row, col].IsRevealed || Cells[row, col].IsMine)
+            if (row < 0 || col < 0 || row >= Rows || col >= Columns || Cells[row, col].IsRevealed || Cells[row, col].IsMine)
             {
                 return;
             }
@@ -144,21 +138,36 @@ namespace MineSweeper_2
                 return;
             }
 
-            // Check all adjacent cells for valid states
-            for (int i = -1; i <= 1; i++)
-            {
-                for (int j = -1; j <= 1; j++)
-                {
-                    int newRow = row + i;
-                    int newCol = col + j;
+            // Reveal adjacent cells using Breadth-First Search (BFS)
+            Queue<(int, int)> queue = new Queue<(int, int)>();
+            queue.Enqueue((row, col));
 
-                    if (newRow >= 0 && newRow < Rows && newCol >= 0 && newCol < Columns && !Cells[newRow, newCol].IsRevealed)
+            while (queue.Count > 0)
+            {
+                (int r, int c) = queue.Dequeue();
+
+                for (int i = -1; i <= 1; i++)
+                {
+                    for (int j = -1; j <= 1; j++)
                     {
-                        RevealCell(newRow, newCol);
+                        int newRow = r + i;
+                        int newCol = c + j;
+
+                        if (newRow >= 0 && newRow < Rows && newCol >= 0 && newCol < Columns && !Cells[newRow, newCol].IsRevealed && !Cells[newRow, newCol].IsMine)
+                        {
+                            Cells[newRow, newCol].IsRevealed = true;
+
+                            if (Cells[newRow, newCol].AdjacentMines == 0)
+                            {
+                                queue.Enqueue((newRow, newCol));
+                            }
+                        }
                     }
                 }
             }
         }
+
+
 
 
         private void CheckGameStatus()

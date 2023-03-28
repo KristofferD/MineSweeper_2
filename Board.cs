@@ -48,7 +48,5 @@ namespace MineSweeperAgain
                 }
             }
         }
-
-        // Other methods and properties go here...
     }
 }
