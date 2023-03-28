@@ -60,24 +60,29 @@ namespace MineSweeperAgain
 
         private void UpdateCellDisplay(int row, int col)
         {
-            var cell = _game.Cells[row, col];
+            DataGridViewCell cellDisplay = gameBoard.Rows[row].Cells[col];
 
-            if (cell.IsRevealed)
+            if (_game.Cells[row, col].IsRevealed)
             {
-                gameBoard.Rows[row].Cells[col].Style.BackColor = Color.LightGray;
-
-                if (cell.IsMine)
+                cellDisplay.Style.BackColor = Color.LightGray;
+                if (_game.Cells[row, col].IsMine)
                 {
-                    gameBoard.Rows[row].Cells[col].Value = "M";
+                    cellDisplay.Value = "*";
                 }
-                else if (cell.AdjacentMines > 0)
+                else if (_game.Cells[row, col].AdjacentMines > 0)
                 {
-                    gameBoard.Rows[row].Cells[col].Value = cell.AdjacentMines.ToString();
+                    cellDisplay.Value = _game.Cells[row, col].AdjacentMines.ToString();
                 }
                 else
                 {
-                    gameBoard.Rows[row].Cells[col].Value = "";
+                    cellDisplay.Value = ""; // added this line to clear the cell value
+                    _game.RevealAdjacentCells(row, col);
                 }
+            }
+            else
+            {
+                cellDisplay.Style.BackColor = Color.White;
+                cellDisplay.Value = "";
             }
         }
 
