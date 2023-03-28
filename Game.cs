@@ -124,9 +124,27 @@ namespace MineSweeper_2
             CheckGameStatus();
         }
 
-
-        private void RevealAdjacentCells(int row, int col)
+        //Reals adjacentCells when current cell value is 0 using Depth-first-search
+        public void RevealAdjacentCells(int row, int col)
         {
+            if (row < 0 || col < 0 || row >= Rows || col >= Columns)
+            {
+                return;
+            }
+
+            if (Cells[row, col].IsRevealed || Cells[row, col].IsMine)
+            {
+                return;
+            }
+
+            Cells[row, col].IsRevealed = true;
+
+            if (Cells[row, col].AdjacentMines > 0)
+            {
+                return;
+            }
+
+            // Check all adjacent cells for valid states
             for (int i = -1; i <= 1; i++)
             {
                 for (int j = -1; j <= 1; j++)
@@ -134,13 +152,15 @@ namespace MineSweeper_2
                     int newRow = row + i;
                     int newCol = col + j;
 
-                    if (newRow >= 0 && newRow < this.Rows && newCol >= 0 && newCol < this.Columns && !Cells[newRow, newCol].IsRevealed)
+                    if (newRow >= 0 && newRow < Rows && newCol >= 0 && newCol < Columns && !Cells[newRow, newCol].IsRevealed)
                     {
                         RevealCell(newRow, newCol);
                     }
                 }
             }
         }
+
+
         private void CheckGameStatus()
         {
             int revealedCells = 0;
