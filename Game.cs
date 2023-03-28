@@ -134,14 +134,13 @@ namespace MineSweeper_2
                     int newRow = row + i;
                     int newCol = col + j;
 
-                    if (newRow >= 0 && newRow < this.Rows && newCol >= 0 && newCol < this.Columns)
+                    if (newRow >= 0 && newRow < this.Rows && newCol >= 0 && newCol < this.Columns && !Cells[newRow, newCol].IsRevealed)
                     {
                         RevealCell(newRow, newCol);
                     }
                 }
             }
         }
-
         private void CheckGameStatus()
         {
             int revealedCells = 0;
