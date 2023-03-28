@@ -85,5 +85,61 @@ namespace MineSweeper_2
                 }
             }
         }
+
+        // Add the following methods to your Game class:
+
+        public bool RevealCell(int row, int column)
+        {
+            if (row < 0 || row >= RowCount || column < 0 || column >= ColumnCount)
+            {
+                return false;
+            }
+
+            Cell cell = Cells[row, column];
+            if (cell.IsRevealed || cell.IsFlagged)
+            {
+                return false;
+            }
+
+            cell.IsRevealed = true;
+
+            if (cell.IsMine)
+            {
+                return true;
+            }
+
+            if (cell.AdjacentMines == 0)
+            {
+                for (int r = -1; r <= 1; r++)
+                {
+                    for (int c = -1; c <= 1; c++)
+                    {
+                        if (r == 0 && c == 0)
+                        {
+                            continue;
+                        }
+
+                        RevealCell(row + r, column + c);
+                    }
+                }
+            }
+
+            return false;
+        }
+
+        public bool CheckGameStatus()
+        {
+            int revealedCells = 0;
+            foreach (Cell cell in Cells)
+            {
+                if (cell.IsRevealed)
+                {
+                    revealedCells++;
+                }
+            }
+
+            return (RowCount * ColumnCount) - revealedCells == MineCount;
+        }
+
     }
 }
