@@ -17,25 +17,24 @@ namespace MineSweeperAgain
             _game = new Game(gameBoard.RowCount, gameBoard.ColumnCount, 10);
 
             gameBoard.CellClick += GameBoard_CellClick;
+            gameBoard.CellMouseUp += GameBoard_CellMouseUp;
         }
 
         private void GameBoard_CellClick(object? sender, DataGridViewCellEventArgs e)
-
         {
-            private void GameBoard_CellClick(object sender, DataGridViewCellEventArgs e)
+            // Your logic for handling cell clicks goes here
+        }
+
+        private void GameBoard_CellMouseUp(object? sender, DataGridViewCellMouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
             {
-                var mouseEventArgs = e as MouseEventArgs;
-                if (mouseEventArgs?.Button == MouseButtons.Left)
-                {
-                    // Left click on cell
-                }
-                else if (mouseEventArgs?.Button == MouseButtons.Right)
-                {
-                    // Right click on cell
-                }
+                // Left click on cell
             }
-
-
+            else if (e.Button == MouseButtons.Right)
+            {
+                // Right click on cell
+            }
         }
     }
 }
