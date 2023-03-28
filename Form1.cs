@@ -1,3 +1,4 @@
+using MineSweeper_2;
 using System;
 using System.Windows.Forms;
 
