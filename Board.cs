@@ -10,8 +10,16 @@ namespace MineSweeperAgain
     {
         private Cell[,] _cells;
 
+        public int NumRows { get; private set; }
+        public int NumCols { get; private set; }
+        public int NumMines { get; private set; }
+
         public Board(int numRows, int numCols, int numMines)
         {
+            NumRows = numRows;
+            NumCols = numCols;
+            NumMines = numMines;
+
             // Create the 2D array of cells
             _cells = new Cell[numRows, numCols];
 
@@ -40,6 +48,7 @@ namespace MineSweeperAgain
                 }
             }
         }
-    }
 
+        // Other methods and properties go here...
+    }
 }
