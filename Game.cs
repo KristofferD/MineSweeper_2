@@ -90,7 +90,7 @@ namespace MineSweeper_2
 
         public bool RevealCell(int row, int col)
         {
-            if (row < 0 || col < 0 || row >= this.RowCount || col >= this.ColumnCount)
+            if (row < 0 || col < 0 || row >= this.Rows || col >= this.Columns)
             {
                 return false;
             }
@@ -115,6 +115,23 @@ namespace MineSweeper_2
             return false;
         }
 
+        private void RevealAdjacentCells(int row, int col)
+        {
+            for (int i = -1; i <= 1; i++)
+            {
+                for (int j = -1; j <= 1; j++)
+                {
+                    int newRow = row + i;
+                    int newCol = col + j;
+
+                    if (newRow >= 0 && newRow < this.Rows && newCol >= 0 && newCol < this.Columns)
+                    {
+                        RevealCell(newRow, newCol);
+                    }
+                }
+            }
+        }
+
         public bool CheckGameStatus()
         {
             int revealedCells = 0;
@@ -126,7 +143,7 @@ namespace MineSweeper_2
                 }
             }
 
-            return (RowCount * ColumnCount) - revealedCells == MineCount;
+            return (this.Rows * this.Columns) - revealedCells == this.Mines;
         }
 
     }
