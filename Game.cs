@@ -16,6 +16,8 @@ namespace MineSweeper_2
             Columns = columns;
             Mines = mines;
 
+            Cells = new Cell[rows, columns]; // Add this line
+
             InitializeCells();
             PlaceMines();
             CalculateAdjacentMines();
