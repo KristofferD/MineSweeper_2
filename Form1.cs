@@ -60,20 +60,26 @@ namespace MineSweeperAgain
 
         private void UpdateCellDisplay(int row, int col)
         {
-            Cell cell = _game.Cells[row, col];
+            var cell = _game.Cells[row, col];
+
             if (cell.IsRevealed)
             {
+                gameBoard.Rows[row].Cells[col].Style.BackColor = Color.LightGray;
+
                 if (cell.IsMine)
                 {
                     gameBoard.Rows[row].Cells[col].Value = "M";
-                    gameBoard.Rows[row].Cells[col].Style.BackColor = Color.Red;
+                }
+                else if (cell.AdjacentMines > 0)
+                {
+                    gameBoard.Rows[row].Cells[col].Value = cell.AdjacentMines.ToString();
                 }
                 else
                 {
-                    gameBoard.Rows[row].Cells[col].Value = cell.AdjacentMines > 0 ? cell.AdjacentMines.ToString() : "";
-                    gameBoard.Rows[row].Cells[col].Style.BackColor = Color.LightGray;
+                    gameBoard.Rows[row].Cells[col].Value = "";
                 }
             }
         }
+
     }
 }
