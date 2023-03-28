@@ -24,7 +24,25 @@ namespace MineSweeperAgain
 
         private void GameBoard_CellClick(object? sender, DataGridViewCellEventArgs e)
         {
-            // Your logic for handling cell clicks goes here
+            {
+                int row = e.RowIndex;
+                int column = e.ColumnIndex;
+
+                bool clickedOnMine = _game.RevealCell(row, column);
+                if (clickedOnMine)
+                {
+                    MessageBox.Show("Game Over! You clicked on a mine.");
+                    return;
+                }
+
+                UpdateGameBoard();
+
+                bool gameWon = _game.CheckGameStatus();
+                if (gameWon)
+                {
+                    MessageBox.Show("Congratulations! You've won the game.");
+                }
+            }
         }
 
         private void GameBoard_CellMouseUp(object? sender, DataGridViewCellMouseEventArgs e)
@@ -38,33 +56,13 @@ namespace MineSweeperAgain
                 // Right click on cell
             }
         }
-
-        private void GameBoard_CellClick(object sender, DataGridViewCellEventArgs e)
-        {
-            int row = e.RowIndex;
-            int column = e.ColumnIndex;
-
-            bool clickedOnMine = _game.RevealCell(row, column);
-            if (clickedOnMine)
-            {
-                MessageBox.Show("Game Over! You clicked on a mine.");
-                return;
-            }
-
-            UpdateGameBoard();
-
-            bool gameWon = _game.CheckGameStatus();
-            if (gameWon)
-            {
-                MessageBox.Show("Congratulations! You've won the game.");
-            }
-        }
+                 
 
         private void UpdateGameBoard()
         {
-            for (int row = 0; row < _game.RowCount; row++)
+            for (int row = 0; row < gameBoard.RowCount; row++)
             {
-                for (int column = 0; column < _game.ColumnCount; column++)
+                for (int column = 0; column < gameBoard.ColumnCount; column++)
                 {
                     Cell cell = _game.Cells[row, column];
                     if (cell.IsRevealed)
